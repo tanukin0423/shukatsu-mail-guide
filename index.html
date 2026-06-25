@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>就活メール返信ガイド｜就活の木</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+  <meta name="theme-color" content="#2d6b4a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="メール返信">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <style>
+    :root {
+      --green-dark:  #2d6b4a;
+      --green-mid:   #3d8a5f;
+      --green-light: #e8f5ed;
+      --gold:        #d4a843;
+      --gold-light:  #fff8e1;
+      --mint:        #6de0b0;
+      --white:       #ffffff;
+      --gray:        #f5f5f5;
+      --text:        #222222;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      background: var(--gray);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ヘッダー */
+    header {
+      background: var(--green-dark);
+      color: var(--white);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    header img { width: 36px; height: 36px; border-radius: 50%; }
+    header .title { font-size: 17px; font-weight: bold; }
+    header .sub   { font-size: 11px; color: var(--mint); margin-top: 2px; }
+
+    /* メインコンテナ */
+    main { max-width: 640px; margin: 0 auto; padding: 20px 16px 80px; }
+
+    /* セクションカード */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--green-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* プルダウン */
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--green-light);
+      border-radius: 8px;
+      font-size: 15px;
+      background: var(--white);
+      color: var(--text);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232d6b4a' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    select:focus {
+      outline: none;
+      border-color: var(--green-mid);
+    }
+
+    /* テキストエリア */
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--green-light);
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 120px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: var(--green-mid);
+    }
+    .textarea-label {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .textarea-wrap { margin-top: 14px; }
+
+    /* ヒント */
+    .hint {
+      background: var(--gold-light);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #555;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    /* 生成ボタン */
+    .btn-generate {
+      width: 100%;
+      padding: 16px;
+      background: var(--green-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-generate:hover  { background: var(--green-mid); }
+    .btn-generate:active { transform: scale(0.98); }
+
+    /* プロンプト出力エリア */
+    .prompt-area {
+      display: none;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .prompt-area.show { display: block; }
+
+    .prompt-box {
+      background: #1e1e1e;
+      color: #e8e8e8;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin: 12px 0;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    .btn-copy {
+      width: 100%;
+      padding: 13px;
+      background: var(--gold);
+      color: var(--green-dark);
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-copy:hover   { opacity: 0.85; }
+    .btn-copy.copied  { background: var(--mint); color: var(--green-dark); }
+
+    /* AIツールリンク */
+    .ai-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .ai-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--green-light);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--green-dark);
+      font-size: 13px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .ai-link:hover { background: #c8e6d0; }
+    .ai-link .ai-icon { font-size: 20px; }
+
+    /* マナー */
+    .manner-list { list-style: none; padding: 0; }
+    .manner-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--green-light);
+      font-size: 14px;
+      line-height: 1.6;
+      display: flex;
+      gap: 10px;
+    }
+    .manner-list li:last-child { border-bottom: none; }
+    .manner-list .icon { font-size: 18px; flex-shrink: 0; }
+
+    /* フッター */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* トースト */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--green-dark);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: bold;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 999;
+      white-space: nowrap;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="icons/icon-192.png" alt="就活の木">
+  <div>
+    <div class="title">就活メール返信ガイド</div>
+    <div class="sub">🌱 就活の木 ｜ キャリ爺</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- STEP 1: シーン選択 -->
+  <div class="card">
+    <div class="card-title">STEP 1　シーンを選ぶ</div>
+    <select id="scene" onchange="onSceneChange()">
+      <option value="">── シーンを選んでください ──</option>
+      <option value="receipt">📩 受検案内への返信（AI面接・筆記試験など）</option>
+      <option value="schedule">📅 面接日程の確認・調整</option>
+      <option value="accept">✅ 内定承諾の返信</option>
+      <option value="decline">🙏 選考辞退の連絡</option>
+      <option value="inquiry">❓ 問い合わせ・質問</option>
+      <option value="thanks">🙇 お礼メール（面接後）</option>
+      <option value="document">📋 書類提出の連絡</option>
+      <option value="other">🔄 その他（自由入力）</option>
+    </select>
+    <div class="hint" id="hint" style="display:none;"></div>
+  </div>
+
+  <!-- STEP 2: メール貼り付け -->
+  <div class="card">
+    <div class="card-title">STEP 2　先方からのメールを貼り付ける</div>
+    <span class="textarea-label">届いたメールの本文をそのままコピー＆ペーストしてください</span>
+    <textarea id="received-mail" placeholder="例）&#10;件名：【JR東日本】Summer Internship 2026 AI面接官 受検案内&#10;&#10;後藤　大貴さま&#10;&#10;JR東日本採用事務局です。&#10;このたびは、Summer Internship 2026へエントリーいただき…" rows="6"></textarea>
+  </div>
+
+  <!-- STEP 3: 伝えたいこと -->
+  <div class="card">
+    <div class="card-title">STEP 3　伝えたいことを箇条書きにする</div>
+    <span class="textarea-label">文章にしなくてOK。思いついたままでどうぞ</span>
+    <textarea id="points" placeholder="例）&#10;・案内ありがとうございます&#10;・AI面接を受けることを了解しました&#10;・受検期間を確認しました&#10;・よろしくお願いします" rows="5"></textarea>
+    <div class="textarea-wrap">
+      <span class="textarea-label">署名に使う情報（大学名・学年・氏名・連絡先）</span>
+      <textarea id="signature" placeholder="例）&#10;多摩大学 3年　後藤 大貴&#10;メール：xxxx@xxxx.ac.jp&#10;電話：090-XXXX-XXXX" rows="4"></textarea>
+    </div>
+  </div>
+
+  <!-- 生成ボタン -->
+  <button class="btn-generate" onclick="generatePrompt()">
+    ✉️ AIへの依頼プロンプトを生成する
+  </button>
+
+  <!-- プロンプト出力 -->
+  <div class="prompt-area" id="prompt-area">
+    <div class="card-title">📋 生成されたプロンプト</div>
+    <p style="font-size:13px;color:#666;margin-bottom:8px;">以下をコピーして、ChatGPT・Claude・Geminiに貼り付けてください。</p>
+    <div class="prompt-box" id="prompt-box"></div>
+    <button class="btn-copy" id="copy-btn" onclick="copyPrompt()">
+      📋 プロンプトをコピーする
+    </button>
+
+    <div style="margin-top:20px;">
+      <div class="card-title">AIツールを開く</div>
+      <div class="ai-links">
+        <a class="ai-link" href="https://chatgpt.com" target="_blank">
+          <span class="ai-icon">🤖</span> ChatGPT
+        </a>
+        <a class="ai-link" href="https://claude.ai" target="_blank">
+          <span class="ai-icon">✨</span> Claude
+        </a>
+        <a class="ai-link" href="https://gemini.google.com" target="_blank">
+          <span class="ai-icon">💎</span> Gemini
+        </a>
+        <a class="ai-link" href="https://copilot.microsoft.com" target="_blank">
+          <span class="ai-icon">🪟</span> Copilot
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- メールマナー -->
+  <div class="card">
+    <div class="card-title">📖 メール返信の基本マナー</div>
+    <ul class="manner-list">
+      <li><span class="icon">⏰</span><span><strong>24時間以内に返信</strong>すぐ無理なら「確認しました」の一言でOK</span></li>
+      <li><span class="icon">📧</span><span><strong>件名は変えない</strong>「Re:」をつけたまま送る</span></li>
+      <li><span class="icon">🙏</span><span><strong>冒頭は「お世話になっております」</strong>から始める</span></li>
+      <li><span class="icon">✍️</span><span><strong>署名は必ず入れる</strong>大学名・学年・氏名・連絡先</span></li>
+      <li><span class="icon">👁️</span><span><strong>送信前に必ず自分で読む</strong>AIの文章をそのまま送らない</span></li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  🌱 就活の木 ｜ キャリ爺（北山 四郎）<br>
+  答えは、あなたの中にある。
+</footer>
+
+<div class="toast" id="toast">✅ コピーしました！</div>
+
+<script>
+// シーンごとのヒントと追加指示
+const scenes = {
+  receipt: {
+    hint: "💡 受検案内が届いたら、まず「了解しました」の返信を。日程・方法を確認したことを伝えましょう。",
+    instruction: "受検案内（AI面接・筆記試験など）への返信メールを作成してください。受検することへの了解と、確認した旨を丁寧に伝える内容にしてください。"
+  },
+  schedule: {
+    hint: "💡 候補日を複数提示されている場合は、希望日を明確に。調整が必要な場合は代替案も添えましょう。",
+    instruction: "面接日程の確認・調整に関する返信メールを作成してください。希望日程や調整内容を丁寧に伝える内容にしてください。"
+  },
+  accept: {
+    hint: "💡 内定承諾は、感謝の気持ちと入社への意欲を伝える大切なメールです。",
+    instruction: "内定承諾の返信メールを作成してください。感謝の気持ちと入社への意欲を丁寧に伝える内容にしてください。"
+  },
+  decline: {
+    hint: "💡 辞退の連絡は早めに。感謝の言葉を忘れずに、簡潔に伝えましょう。",
+    instruction: "選考辞退の連絡メールを作成してください。感謝の気持ちを伝えながら、丁寧かつ簡潔に辞退の意思を伝える内容にしてください。"
+  },
+  inquiry: {
+    hint: "💡 質問は具体的に。何を知りたいかを明確にしましょう。",
+    instruction: "採用担当者への問い合わせ・質問メールを作成してください。質問内容を明確に、丁寧に伝える内容にしてください。"
+  },
+  thanks: {
+    hint: "💡 面接後は当日中か翌朝までにお礼メールを送りましょう。面接での学びや感謝を具体的に。",
+    instruction: "面接後のお礼メールを作成してください。面接への感謝と、面接で感じたことや学びを交えた、誠実な内容にしてください。"
+  },
+  document: {
+    hint: "💡 書類を添付した旨と、書類の内容（ES・履歴書など）を明記しましょう。",
+    instruction: "書類提出の連絡メールを作成してください。提出書類の内容と、添付している旨を丁寧に伝える内容にしてください。"
+  },
+  other: {
+    hint: "💡 伝えたいことを下の欄に自由に箇条書きしてください。AIが適切なメールに仕上げます。",
+    instruction: "採用担当者への返信メールを作成してください。"
+  }
+};
+
+function onSceneChange() {
+  const scene = document.getElementById('scene').value;
+  const hintEl = document.getElementById('hint');
+  if (scene && scenes[scene]) {
+    hintEl.textContent = scenes[scene].hint;
+    hintEl.style.display = 'block';
+  } else {
+    hintEl.style.display = 'none';
+  }
+}
+
+function generatePrompt() {
+  const scene = document.getElementById('scene').value;
+  const received = document.getElementById('received-mail').value.trim();
+  const points = document.getElementById('points').value.trim();
+  const sig = document.getElementById('signature').value.trim();
+
+  if (!scene) {
+    showToast('⚠️ シーンを選んでください');
+    return;
+  }
+  if (!points) {
+    showToast('⚠️ 伝えたいことを入力してください');
+    return;
+  }
+
+  const instruction = scenes[scene].instruction;
+
+  let prompt = `以下の条件で、採用担当者への${getSceneLabel(scene)}を作成してください。\n`;
+  prompt += `【依頼内容】${instruction}\n\n`;
+
+  if (received) {
+    prompt += `【先方からのメール】\n${received}\n\n`;
+  }
+
+  prompt += `【私が伝えたいこと】\n${points}\n\n`;
+
+  if (sig) {
+    prompt += `【署名情報】\n${sig}\n\n`;
+  } else {
+    prompt += `【署名情報】\n○○大学○年　氏名\nメール：xxxx@xxxx.ac.jp\n電話：090-XXXX-XXXX\n\n`;
+  }
+
+  prompt += `【作成条件】\n`;
+  prompt += `・丁寧なビジネスメールの形式で\n`;
+  prompt += `・件名・宛名・本文・署名の構成で\n`;
+  prompt += `・簡潔に、長くなりすぎないように\n`;
+  prompt += `・送信前に自分で確認することを前提に、自然な日本語で`;
+
+  document.getElementById('prompt-box').textContent = prompt;
+  document.getElementById('prompt-area').classList.add('show');
+  document.getElementById('copy-btn').textContent = '📋 プロンプトをコピーする';
+  document.getElementById('copy-btn').classList.remove('copied');
+
+  // スクロール
+  setTimeout(() => {
+    document.getElementById('prompt-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function getSceneLabel(scene) {
+  const labels = {
+    receipt: '返信メール（受検案内）',
+    schedule: '返信メール（日程調整）',
+    accept: '内定承諾メール',
+    decline: '選考辞退メール',
+    inquiry: '問い合わせメール',
+    thanks: 'お礼メール',
+    document: '書類提出メール',
+    other: '返信メール',
+  };
+  return labels[scene] || '返信メール';
+}
+
+function copyPrompt() {
+  const text = document.getElementById('prompt-box').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✅ コピーしました！';
+    btn.classList.add('copied');
+    showToast('✅ コピーしました！AIツールに貼り付けてください');
+    setTimeout(() => {
+      btn.textContent = '📋 プロンプトをコピーする';
+      btn.classList.remove('copied');
+    }, 3000);
+  });
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// Service Worker登録
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(console.error);
+}
+</script>
+
+</body>
+</html>
