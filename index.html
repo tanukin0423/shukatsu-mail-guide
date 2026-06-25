@@ -303,7 +303,7 @@
   <div class="card">
     <div class="card-title">STEP 2　先方からのメールを貼り付ける</div>
     <span class="textarea-label">届いたメールの本文をそのままコピー＆ペーストしてください</span>
-    <textarea id="received-mail" placeholder="例）&#10;件名：【JR東日本】Summer Internship 2026 AI面接官 受検案内&#10;&#10;後藤　大貴さま&#10;&#10;JR東日本採用事務局です。&#10;このたびは、Summer Internship 2026へエントリーいただき…" rows="6"></textarea>
+    <textarea id="received-mail" placeholder="例）&#10;件名：【○○株式会社】インターンシップ 受検案内&#10;&#10;◆◆　◆◆さま&#10;&#10;○○株式会社 採用事務局です。&#10;このたびは、インターンシップへエントリーいただき…" rows="6"></textarea>
   </div>
 
   <!-- STEP 3: 伝えたいこと -->
@@ -313,7 +313,7 @@
     <textarea id="points" placeholder="例）&#10;・案内ありがとうございます&#10;・AI面接を受けることを了解しました&#10;・受検期間を確認しました&#10;・よろしくお願いします" rows="5"></textarea>
     <div class="textarea-wrap">
       <span class="textarea-label">署名に使う情報（大学名・学年・氏名・連絡先）</span>
-      <textarea id="signature" placeholder="例）&#10;多摩大学 3年　後藤 大貴&#10;メール：xxxx@xxxx.ac.jp&#10;電話：090-XXXX-XXXX" rows="4"></textarea>
+      <textarea id="signature" placeholder="例）&#10;○○大学 ○年　◆◆ ◆◆&#10;メール：xxxx@xxxx.ac.jp&#10;電話：090-XXXX-XXXX" rows="4"></textarea>
     </div>
   </div>
 
@@ -408,14 +408,62 @@ const scenes = {
   }
 };
 
+// シーンごとのplaceholderサンプル
+const placeholders = {
+  receipt: {
+    received: "例）\n件名：【○○株式会社】インターンシップ 受検案内\n\n◆◆　◆◆さま\n\n○○株式会社 採用事務局です。\nこのたびは、インターンシップへエントリーいただき、誠にありがとうございます。\n次のステップとして、筆記試験（またはAI面接）を受検いただきます…",
+    points: "例）\n・受検案内をありがとうございます\n・受検することを了解しました\n・受検期間と方法を確認しました\n・よろしくお願いします"
+  },
+  schedule: {
+    received: "例）\n件名：【○○株式会社】面接日程のご案内\n\n◆◆　◆◆さま\n\n書類選考を通過されましたのでご連絡いたします。\n以下の日程よりご都合のよい日時をお知らせください。\n①○月○日（○）10:00〜\n②○月○日（○）14:00〜\n③○月○日（○）16:00〜",
+    points: "例）\n・面接の機会をいただきありがとうございます\n・①○月○日（○）10:00〜 を希望します\n・会場（またはオンラインURL）を確認しました\n・よろしくお願いします"
+  },
+  accept: {
+    received: "例）\n件名：【○○株式会社】内定のご連絡\n\n◆◆　◆◆さま\n\nこのたびは内定をお伝えできることを大変嬉しく思います。\n○月○日までに承諾のご連絡をいただけますでしょうか…",
+    points: "例）\n・内定のご連絡をありがとうございます\n・謹んで承諾いたします\n・入社に向けて精一杯努力します\n・今後ともよろしくお願いします"
+  },
+  decline: {
+    received: "例）\n件名：【○○株式会社】内定のご連絡\n\n◆◆　◆◆さま\n\nこのたびは内定をお伝えできることを…",
+    points: "例）\n・内定のご連絡をありがとうございます\n・誠に恐縮ですが、今回は辞退させていただきたい\n・他社への入社を決めたため\n・選考の機会をいただいたことへのお礼"
+  },
+  inquiry: {
+    received: "例）\n件名：【○○株式会社】インターンシップ 参加確定のご連絡\n\n◆◆　◆◆さま\n\nインターンシップへの参加が確定しましたのでご連絡いたします…",
+    points: "例）\n・参加確定のご連絡をありがとうございます\n・当日の持ち物を確認したい\n・服装（スーツか私服か）を教えてほしい\n・会場へのアクセスを確認したい"
+  },
+  thanks: {
+    received: "例）（先方からのメールがない場合は空欄でもOK）\n件名：【○○株式会社】面接のご案内\n\n◆◆　◆◆さま\n\n本日はご来社いただきありがとうございました…",
+    points: "例）\n・本日は面接の機会をいただきありがとうございました\n・貴社の事業への理解が深まった\n・担当の方の話がとても参考になった\n・引き続きよろしくお願いします"
+  },
+  document: {
+    received: "例）\n件名：【○○株式会社】エントリーシートのご提出について\n\n◆◆　◆◆さま\n\n選考に際し、以下の書類をご提出ください。\n・エントリーシート\n・成績証明書\n提出期限：○月○日（○）まで",
+    points: "例）\n・書類提出のご案内をありがとうございます\n・エントリーシートと成績証明書を添付しました\n・期限内に提出できました\n・よろしくお願いします"
+  },
+  other: {
+    received: "先方から届いたメールをそのまま貼り付けてください。\n（ない場合は空欄でもOK）",
+    points: "伝えたいことを箇条書きで入力してください。\n例）\n・○○について確認したい\n・△△を伝えたい\n・よろしくお願いします"
+  }
+};
+
 function onSceneChange() {
   const scene = document.getElementById('scene').value;
   const hintEl = document.getElementById('hint');
+  const receivedEl = document.getElementById('received-mail');
+  const pointsEl = document.getElementById('points');
+
   if (scene && scenes[scene]) {
     hintEl.textContent = scenes[scene].hint;
     hintEl.style.display = 'block';
   } else {
     hintEl.style.display = 'none';
+  }
+
+  // placeholderをシーンに合わせて変更
+  if (scene && placeholders[scene]) {
+    receivedEl.placeholder = placeholders[scene].received;
+    pointsEl.placeholder = placeholders[scene].points;
+  } else {
+    receivedEl.placeholder = "例）\n件名：【○○株式会社】インターンシップ 受検案内\n\n◆◆　◆◆さま\n\n○○株式会社 採用事務局です。\nこのたびは、インターンシップへエントリーいただき…";
+    pointsEl.placeholder = "例）\n・案内ありがとうございます\n・了解しました\n・よろしくお願いします";
   }
 }
 
