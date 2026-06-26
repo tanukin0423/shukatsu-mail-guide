@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>就活メール返信ガイド｜就活の木</title>
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
   <meta name="theme-color" content="#2d6b4a">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="メール返信">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
 
   <style>
     :root {
@@ -703,7 +706,11 @@ function showToast(msg) {
 
 // Service Worker登録
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(console.error);
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.error('SW error:', err));
+  });
 }
 </script>
 

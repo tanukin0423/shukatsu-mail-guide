@@ -2,23 +2,37 @@
   "name": "就活メール返信ガイド｜就活の木",
   "short_name": "メール返信",
   "description": "AIを使った就活メール返信プロンプト生成アプリ",
-  "start_url": "./index.html",
+  "start_url": "/shukatsu-mail-guide/index.html",
+  "scope": "/shukatsu-mail-guide/",
   "display": "standalone",
   "background_color": "#2d6b4a",
   "theme_color": "#2d6b4a",
   "orientation": "portrait",
+  "lang": "ja",
   "icons": [
     {
       "src": "icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
