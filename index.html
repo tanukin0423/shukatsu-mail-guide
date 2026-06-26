@@ -268,9 +268,99 @@
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
+    /* インストールバナー */
+    .install-banner {
+      display: none;
+      background: var(--gold);
+      color: var(--green-dark);
+      padding: 12px 16px;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+    }
+    .install-banner.show { display: flex; }
+    .install-banner .install-text { font-size: 13px; font-weight: bold; flex: 1; }
+    .install-banner .btn-install {
+      background: var(--green-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .install-banner .btn-dismiss {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--green-dark);
+      padding: 0 4px;
+    }
+
+    /* ヘッダー内インストールボタン */
+    .btn-install-header {
+      margin-left: auto;
+      background: var(--gold);
+      color: var(--green-dark);
+      border: none;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+      white-space: nowrap;
+    }
+    .btn-install-header.show { display: block; }
+
+    /* iOS手順バナー */
+    .ios-banner {
+      display: none;
+      background: #e8f5ed;
+      border: 2px solid var(--green-mid);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 0 16px 16px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--green-dark);
+    }
+    .ios-banner.show { display: block; }
+    .ios-banner strong { display: block; margin-bottom: 6px; font-size: 14px; }
+    .ios-banner .btn-close-ios {
+      margin-top: 10px;
+      background: var(--green-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
+
+<!-- インストールバナー（Android/Chrome向け） -->
+<div class="install-banner" id="install-banner">
+  <span class="install-text">📲 ホーム画面に追加してアプリとして使えます！</span>
+  <button class="btn-install" id="btn-install-banner">追加する</button>
+  <button class="btn-dismiss" id="btn-dismiss-banner">✕</button>
+</div>
+
+<!-- iOS向け手順バナー -->
+<div class="ios-banner" id="ios-banner">
+  <strong>📲 iPhoneのホーム画面に追加する方法</strong>
+  ① Safariの下部にある「共有ボタン（四角に上矢印）」をタップ<br>
+  ② 「ホーム画面に追加」をタップ<br>
+  ③ 右上の「追加」をタップ<br>
+  ④ ホーム画面にアイコンが追加されます🌱
+  <button class="btn-close-ios" onclick="closeIosBanner()">閉じる</button>
+</div>
 
 <header>
   <img src="icons/icon-192.png" alt="就活の木">
@@ -278,6 +368,9 @@
     <div class="title">就活メール返信ガイド</div>
     <div class="sub">🌱 就活の木 ｜ キャリ爺</div>
   </div>
+  <button class="btn-install-header" id="btn-install-header" onclick="installApp()">
+    📲 アプリ追加
+  </button>
 </header>
 
 <main>
@@ -408,7 +501,64 @@ const scenes = {
   }
 };
 
-// シーンごとのplaceholderサンプル
+// ===== PWAインストール処理 =====
+let deferredPrompt = null;
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches
+  || window.navigator.standalone;
+
+// iOSの場合：Safariの手順バナーを表示
+if (isIOS && !isInStandaloneMode) {
+  document.getElementById('ios-banner').classList.add('show');
+}
+
+// Android/Chrome：beforeinstallpromptイベントをキャッチ
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // バナーとヘッダーボタンを表示
+  document.getElementById('install-banner').classList.add('show');
+  document.getElementById('btn-install-header').classList.add('show');
+});
+
+// インストール実行
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((result) => {
+      if (result.outcome === 'accepted') {
+        showToast('✅ ホーム画面に追加しました！');
+        document.getElementById('install-banner').classList.remove('show');
+        document.getElementById('btn-install-header').classList.remove('show');
+      }
+      deferredPrompt = null;
+    });
+  } else if (isIOS) {
+    document.getElementById('ios-banner').classList.add('show');
+    document.getElementById('ios-banner').scrollIntoView({ behavior: 'smooth' });
+  } else {
+    showToast('💡 ブラウザのメニューから「ホーム画面に追加」をお選びください');
+  }
+}
+
+function closeIosBanner() {
+  document.getElementById('ios-banner').classList.remove('show');
+}
+
+// バナーのボタン
+document.getElementById('btn-install-banner')?.addEventListener('click', installApp);
+document.getElementById('btn-dismiss-banner')?.addEventListener('click', () => {
+  document.getElementById('install-banner').classList.remove('show');
+});
+
+// インストール完了後
+window.addEventListener('appinstalled', () => {
+  showToast('🌱 アプリをインストールしました！');
+  document.getElementById('install-banner').classList.remove('show');
+  document.getElementById('btn-install-header').classList.remove('show');
+});
+
+// ===== シーンごとのplaceholderサンプル =====
 const placeholders = {
   receipt: {
     received: "例）\n件名：【○○株式会社】インターンシップ 受検案内\n\n◆◆　◆◆さま\n\n○○株式会社 採用事務局です。\nこのたびは、インターンシップへエントリーいただき、誠にありがとうございます。\n次のステップとして、筆記試験（またはAI面接）を受検いただきます…",
