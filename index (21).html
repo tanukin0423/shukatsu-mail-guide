@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>就活メールガイド｜就活の木</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <meta name="theme-color" content="#2d6b4a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="就活メール">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <style>
+    :root {
+      --green-dark:  #2d6b4a;
+      --green-mid:   #3d8a5f;
+      --green-light: #e8f5ed;
+      --gold:        #d4a843;
+      --gold-light:  #fff8e1;
+      --mint:        #6de0b0;
+      --white:       #ffffff;
+      --gray:        #f5f5f5;
+      --text:        #222222;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      background: var(--gray);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--green-dark);
+      color: var(--white);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    header img { width: 36px; height: 36px; border-radius: 50%; }
+    header .title { font-size: 17px; font-weight: bold; }
+    header .sub   { font-size: 11px; color: var(--mint); margin-top: 2px; }
+    header .btn-install-header {
+      margin-left: auto;
+      background: var(--gold);
+      color: var(--green-dark);
+      border: none;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+      white-space: nowrap;
+    }
+    header .btn-install-header.show { display: block; }
+
+    main { max-width: 640px; margin: 0 auto; padding: 20px 16px 80px; }
+
+    /* ===== タブ切替 ===== */
+    .tab-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      padding: 14px 8px;
+      border: none;
+      background: var(--white);
+      color: #888;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-btn .tab-icon { font-size: 22px; }
+    .tab-btn .tab-sub  { font-size: 10px; font-weight: normal; color: #aaa; }
+    .tab-btn.active {
+      color: var(--green-dark);
+      border-bottom: 3px solid var(--gold);
+      background: var(--green-light);
+    }
+    .tab-btn.active .tab-sub { color: var(--green-mid); }
+
+    /* ===== カード ===== */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--green-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--green-light);
+      border-radius: 8px;
+      font-size: 15px;
+      background: var(--white);
+      color: var(--text);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232d6b4a' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    select:focus { outline: none; border-color: var(--green-mid); }
+
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--green-light);
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 120px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { outline: none; border-color: var(--green-mid); }
+    .textarea-label {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .textarea-wrap { margin-top: 14px; }
+
+    .sig-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .sig-label-row .textarea-label { margin-bottom: 0; }
+    .btn-clear-sig {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: #888;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .btn-clear-sig:hover { background: #fdeaea; color: #c0392b; border-color: #e5b3b3; }
+
+    .sig-save-note {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 5px;
+      transition: color 0.2s;
+    }
+    .sig-save-note.saved { color: var(--green-mid); font-weight: bold; }
+
+    /* サンプル文例ボックス */
+    .sample-box {
+      display: none;
+      background: var(--gold-light);
+      border: 1px dashed var(--gold);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #555;
+      margin-top: 10px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+    .sample-box.show { display: block; }
+    .sample-label {
+      font-weight: bold;
+      color: var(--green-dark);
+      font-size: 12px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .hint {
+      background: var(--gold-light);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #555;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .btn-generate {
+      width: 100%;
+      padding: 16px;
+      background: var(--green-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-generate:hover  { background: var(--green-mid); }
+    .btn-generate:active { transform: scale(0.98); }
+
+    .prompt-area {
+      display: none;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .prompt-area.show { display: block; }
+
+    .prompt-box {
+      background: #1e1e1e;
+      color: #e8e8e8;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin: 12px 0;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .btn-copy {
+      width: 100%;
+      padding: 13px;
+      background: var(--gold);
+      color: var(--green-dark);
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-copy:hover  { opacity: 0.85; }
+    .btn-copy.copied { background: var(--mint); color: var(--green-dark); }
+
+    .ai-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .ai-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--green-light);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--green-dark);
+      font-size: 13px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .ai-link:hover { background: #c8e6d0; }
+    .ai-link .ai-icon { font-size: 20px; }
+
+    .manner-list { list-style: none; padding: 0; }
+    .manner-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--green-light);
+      font-size: 14px;
+      line-height: 1.6;
+      display: flex;
+      gap: 10px;
+    }
+    .manner-list li:last-child { border-bottom: none; }
+    .manner-list .icon { font-size: 18px; flex-shrink: 0; }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--green-dark);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: bold;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 999;
+      white-space: nowrap;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .install-banner {
+      display: none;
+      background: var(--gold);
+      color: var(--green-dark);
+      padding: 12px 16px;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+    }
+    .install-banner.show { display: flex; }
+    .install-banner .install-text { font-size: 13px; font-weight: bold; flex: 1; }
+    .install-banner .btn-install {
+      background: var(--green-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .install-banner .btn-dismiss {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--green-dark);
+      padding: 0 4px;
+    }
+
+    .ios-banner {
+      display: none;
+      background: #e8f5ed;
+      border: 2px solid var(--green-mid);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 0 16px 16px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--green-dark);
+    }
+    .ios-banner.show { display: block; }
+    .ios-banner strong { display: block; margin-bottom: 6px; font-size: 14px; }
+    .ios-banner .btn-close-ios {
+      margin-top: 10px;
+      background: var(--green-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* タブコンテンツ切替 */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* サンプルトグルボタン */
+    .btn-sample {
+      margin-top: 8px;
+      padding: 7px 14px;
+      background: var(--green-light);
+      border: 1px solid var(--green-mid);
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--green-dark);
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .btn-sample:hover { background: #c8e6d0; }
+
+    /* 印刷ボタン（ヘッダー内） */
+    .btn-print-header {
+      background: rgba(255,255,255,0.15);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .btn-print-header:hover { background: rgba(255,255,255,0.25); }
+
+    /* QRモーダル */
+    .qr-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-modal-overlay.show { display: flex; }
+    .qr-modal {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 28px 24px 20px;
+      max-width: 340px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    }
+    .qr-modal h2 { font-size: 16px; color: var(--green-dark); margin-bottom: 6px; }
+    .qr-modal p { font-size: 12px; color: #666; margin-bottom: 16px; line-height: 1.6; }
+    #qr-canvas-modal {
+      border: 4px solid var(--green-light);
+      border-radius: 8px;
+      display: block;
+      margin: 0 auto 16px;
+    }
+    .qr-modal .url-text {
+      font-size: 11px;
+      color: #888;
+      word-break: break-all;
+      margin-bottom: 16px;
+      background: var(--gray);
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+    .qr-modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-qr-print {
+      padding: 11px;
+      background: var(--green-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-qr-print:hover { background: var(--green-mid); }
+    .btn-qr-close {
+      padding: 11px;
+      background: var(--gray);
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* 印刷専用QRセクション（通常時は非表示） */
+    .print-qr-section { display: none; }
+
+    /* ===== 印刷スタイル ===== */
+    @media print {
+      body { background: white; }
+      header {
+        position: static;
+        box-shadow: none;
+        background: #2d6b4a !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .install-banner, .ios-banner, .tab-bar,
+      .btn-generate, .prompt-area,
+      .btn-install-header, .btn-print-header,
+      footer, .toast { display: none !important; }
+      main { padding: 8px 16px 20px; }
+      .print-qr-section {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px 0 12px;
+        page-break-inside: avoid;
+        border-bottom: 2px solid #e8f5ed;
+        margin-bottom: 16px;
+      }
+      .print-qr-section .print-qr-title {
+        font-size: 15px;
+        font-weight: bold;
+        color: #2d6b4a;
+        margin-top: 10px;
+        margin-bottom: 3px;
+      }
+      .print-qr-section .print-qr-url {
+        font-size: 11px;
+        color: #666;
+        word-break: break-all;
+      }
+      .card { box-shadow: none; border: 1px solid #ddd; margin-bottom: 12px; }
+      .tab-panel { display: block !important; }
+      .sample-box, .card-sample-first { display: none !important; }
+      select, textarea { border: 1px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="install-banner" id="install-banner">
+  <span class="install-text">📲 ホーム画面に追加してアプリとして使えます！</span>
+  <button class="btn-install" id="btn-install-banner">追加する</button>
+  <button class="btn-dismiss" id="btn-dismiss-banner">✕</button>
+</div>
+
+<div class="ios-banner" id="ios-banner">
+  <strong>📲 iPhoneのホーム画面に追加する方法</strong>
+  ① Safariの下部にある「共有ボタン（四角に上矢印）」をタップ<br>
+  ② 「ホーム画面に追加」をタップ<br>
+  ③ 右上の「追加」をタップ<br>
+  ④ ホーム画面にアイコンが追加されます🌱
+  <button class="btn-close-ios" onclick="closeIosBanner()">閉じる</button>
+</div>
+
+<header>
+  <img src="icons/icon-192.png" alt="就活の木">
+  <div>
+    <div class="title">就活メールガイド</div>
+    <div class="sub">🌱 就活の木 ｜ キャリ爺</div>
+  </div>
+  <button class="btn-print-header" onclick="openQrModal()" title="QRコード・印刷">
+    🖨️
+  </button>
+  <button class="btn-install-header" id="btn-install-header" onclick="installApp()">
+    📲 アプリ追加
+  </button>
+</header>
+
+<!-- QRモーダル -->
+<div class="qr-modal-overlay" id="qr-modal-overlay" onclick="closeQrModal(event)">
+  <div class="qr-modal">
+    <h2>🌱 就活メールガイド</h2>
+    <p>このQRコードをスキャンすると<br>スマホからすぐ使えます</p>
+    <canvas id="qr-canvas-modal" width="200" height="200"></canvas>
+    <div class="url-text">https://tanukin0423.github.io/shukatsu-mail-guide/</div>
+    <div class="qr-modal-btns">
+      <button class="btn-qr-print" onclick="printQr()">🖨️ 印刷する</button>
+      <button class="btn-qr-close" onclick="document.getElementById('qr-modal-overlay').classList.remove('show')">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<!-- 印刷時のみ表示するQRセクション（mainの外・bodyの直下） -->
+<div class="print-qr-section" id="print-qr-section">
+  <canvas id="qr-canvas-print" width="160" height="160"></canvas>
+  <div class="print-qr-title">就活メールガイド｜就活の木</div>
+  <div class="print-qr-url">https://tanukin0423.github.io/shukatsu-mail-guide/</div>
+</div>
+
+<main>
+
+  <!-- タブ切替 -->
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-first-btn" onclick="switchTab('first')">
+      <span class="tab-icon">📤</span>
+      <span>初めてのメール</span>
+      <span class="tab-sub">問い合わせ・書類送付など</span>
+    </button>
+    <button class="tab-btn" id="tab-reply-btn" onclick="switchTab('reply')">
+      <span class="tab-icon">↩️</span>
+      <span>返信メール</span>
+      <span class="tab-sub">企業からのメールへ返信</span>
+    </button>
+  </div>
+
+  <!-- ===== パターン１：初めてのメール ===== -->
+  <div class="tab-panel active" id="panel-first">
+
+    <div class="card">
+      <div class="card-title">STEP 1　シーンを選ぶ</div>
+      <select id="scene-first" onchange="onFirstSceneChange()">
+        <option value="">── シーンを選んでください ──</option>
+        <optgroup label="【インターンシップ関連】">
+          <option value="intern-apply">🏢 インターンシップへの参加申込・問い合わせ</option>
+          <option value="intern-doc">📎 インターンシップ書類の送付（ES・履歴書）</option>
+          <option value="intern-question">❓ インターンシップ説明会後の質問</option>
+          <option value="intern-recommend">🎓 学内推薦でのインターンシップ参加・事前挨拶</option>
+          <option value="intern-voluntary-thanks">🙏 自発的応募のインターンシップ参加・お礼</option>
+        </optgroup>
+        <optgroup label="【採用・選考関連】">
+          <option value="entry">✉️ エントリーの連絡・挨拶メール</option>
+          <option value="doc-submit">📋 選考書類の初回提出（ES・履歴書）</option>
+          <option value="event-join">🎫 会社説明会・OB訪問の申込</option>
+          <option value="info-request">🔍 採用情報の問い合わせ</option>
+        </optgroup>
+        <optgroup label="【OB・OG訪問】">
+          <option value="obog-request">🤝 OB・OG訪問のお願い</option>
+          <option value="obog-thanks">🙇 OB・OG訪問後のお礼</option>
+        </optgroup>
+        <optgroup label="【その他】">
+          <option value="first-other">🔄 その他（自由記述）</option>
+        </optgroup>
+      </select>
+      <div class="hint" id="hint-first" style="display:none;"></div>
+    </div>
+
+    <div class="card" id="card-sample-first" style="display:none;">
+      <div class="card-title">📄 参考文例</div>
+      <p style="font-size:13px;color:#666;margin-bottom:8px;">このシーンでよく使われる文例です。参考にしながら、下の欄に自分の言葉で入力してください。</p>
+      <div class="sample-box show" id="sample-text-first"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">STEP 2　宛先・送付先の情報を入力する</div>
+      <span class="textarea-label">会社名・担当部署・担当者名（わかる範囲でOK）</span>
+      <textarea id="to-info-first" placeholder="例）&#10;○○株式会社&#10;採用担当 ◆◆ ◆◆様&#10;（担当者不明の場合：採用ご担当者様）" rows="3"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="card-title">STEP 3　伝えたいことを箇条書きにする</div>
+      <span class="textarea-label">文章にしなくてOK。思いついたままでどうぞ</span>
+      <textarea id="points-first" placeholder="例）&#10;・インターンシップの参加を希望しています&#10;・○月開催の1dayプログラムに興味があります&#10;・選考方法を確認したい&#10;・よろしくお願いします" rows="5"></textarea>
+      <div class="textarea-wrap">
+        <div class="sig-label-row">
+          <span class="textarea-label">署名に使う情報（大学名・学年・氏名・連絡先）</span>
+          <button type="button" class="btn-clear-sig" onclick="clearSignature()">🗑️ クリア</button>
+        </div>
+        <textarea id="sig-first" placeholder="例）&#10;○○大学 ○年　◆◆ ◆◆&#10;メール：xxxx@xxxx.ac.jp&#10;電話：090-XXXX-XXXX" rows="4" oninput="saveSignature(this.value)"></textarea>
+        <div class="sig-save-note" id="sig-save-note-first">💾 入力内容は自動保存され、次回以降も表示されます</div>
+      </div>
+    </div>
+
+    <button class="btn-generate" onclick="generatePrompt('first')">
+      ✉️ AIへの依頼プロンプトを生成する
+    </button>
+
+    <div class="prompt-area" id="prompt-area-first">
+      <div class="card-title">📋 生成されたプロンプト</div>
+      <p style="font-size:13px;color:#666;margin-bottom:8px;">以下をコピーして、ChatGPT・Claude・Geminiに貼り付けてください。</p>
+      <div class="prompt-box" id="prompt-box-first"></div>
+      <button class="btn-copy" id="copy-btn-first" onclick="copyPrompt('first')">
+        📋 プロンプトをコピーする
+      </button>
+      <div style="margin-top:20px;">
+        <div class="card-title">AIツールを開く</div>
+        <div class="ai-links">
+          <a class="ai-link" href="https://chatgpt.com" target="_blank"><span class="ai-icon">🤖</span> ChatGPT</a>
+          <a class="ai-link" href="https://claude.ai" target="_blank"><span class="ai-icon">✨</span> Claude</a>
+          <a class="ai-link" href="https://gemini.google.com" target="_blank"><span class="ai-icon">💎</span> Gemini</a>
+          <a class="ai-link" href="https://copilot.microsoft.com" target="_blank"><span class="ai-icon">🪟</span> Copilot</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-first -->
+
+  <!-- ===== パターン２：返信メール ===== -->
+  <div class="tab-panel" id="panel-reply">
+
+    <div class="card">
+      <div class="card-title">STEP 1　シーンを選ぶ</div>
+      <select id="scene-reply" onchange="onReplySceneChange()">
+        <option value="">── シーンを選んでください ──</option>
+        <option value="receipt">📩 受検案内への返信（AI面接・筆記試験など）</option>
+        <option value="schedule">📅 面接日程の確認・調整</option>
+        <option value="accept">✅ 内定承諾の返信</option>
+        <option value="decline">🙏 選考辞退の連絡</option>
+        <option value="inquiry">❓ 問い合わせ・質問</option>
+        <option value="thanks">🙇 お礼メール（面接後）</option>
+        <option value="document">📋 書類提出の連絡</option>
+        <option value="other">🔄 その他（自由入力）</option>
+      </select>
+      <div class="hint" id="hint-reply" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">STEP 2　先方からのメールを貼り付ける</div>
+      <span class="textarea-label">届いたメールの本文をそのままコピー＆ペーストしてください</span>
+      <textarea id="received-mail" placeholder="例）&#10;件名：【○○株式会社】インターンシップ 受検案内&#10;&#10;◆◆　◆◆さま&#10;&#10;○○株式会社 採用事務局です。&#10;このたびは、インターンシップへエントリーいただき…" rows="6"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="card-title">STEP 3　伝えたいことを箇条書きにする</div>
+      <span class="textarea-label">文章にしなくてOK。思いついたままでどうぞ</span>
+      <textarea id="points-reply" placeholder="例）&#10;・案内ありがとうございます&#10;・AI面接を受けることを了解しました&#10;・受検期間を確認しました&#10;・よろしくお願いします" rows="5"></textarea>
+      <div class="textarea-wrap">
+        <div class="sig-label-row">
+          <span class="textarea-label">署名に使う情報（大学名・学年・氏名・連絡先）</span>
+          <button type="button" class="btn-clear-sig" onclick="clearSignature()">🗑️ クリア</button>
+        </div>
+        <textarea id="sig-reply" placeholder="例）&#10;○○大学 ○年　◆◆ ◆◆&#10;メール：xxxx@xxxx.ac.jp&#10;電話：090-XXXX-XXXX" rows="4" oninput="saveSignature(this.value)"></textarea>
+        <div class="sig-save-note" id="sig-save-note-reply">💾 入力内容は自動保存され、次回以降も表示されます</div>
+      </div>
+    </div>
+
+    <button class="btn-generate" onclick="generatePrompt('reply')">
+      ↩️ AIへの依頼プロンプトを生成する
+    </button>
+
+    <div class="prompt-area" id="prompt-area-reply">
+      <div class="card-title">📋 生成されたプロンプト</div>
+      <p style="font-size:13px;color:#666;margin-bottom:8px;">以下をコピーして、ChatGPT・Claude・Geminiに貼り付けてください。</p>
+      <div class="prompt-box" id="prompt-box-reply"></div>
+      <button class="btn-copy" id="copy-btn-reply" onclick="copyPrompt('reply')">
+        📋 プロンプトをコピーする
+      </button>
+      <div style="margin-top:20px;">
+        <div class="card-title">AIツールを開く</div>
+        <div class="ai-links">
+          <a class="ai-link" href="https://chatgpt.com" target="_blank"><span class="ai-icon">🤖</span> ChatGPT</a>
+          <a class="ai-link" href="https://claude.ai" target="_blank"><span class="ai-icon">✨</span> Claude</a>
+          <a class="ai-link" href="https://gemini.google.com" target="_blank"><span class="ai-icon">💎</span> Gemini</a>
+          <a class="ai-link" href="https://copilot.microsoft.com" target="_blank"><span class="ai-icon">🪟</span> Copilot</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-reply -->
+
+  <!-- メールマナー（共通） -->
+  <div class="card">
+    <div class="card-title">📖 就活メールの基本マナー</div>
+    <ul class="manner-list">
+      <li><span class="icon">⏰</span><span><strong>24時間以内に返信</strong>すぐ無理なら「確認しました」の一言でOK</span></li>
+      <li><span class="icon">📧</span><span><strong>返信は件名を変えない</strong>「Re:」をつけたまま送る</span></li>
+      <li><span class="icon">✉️</span><span><strong>初回メールの件名は明確に</strong>「【インターンシップ参加希望】○○大学 氏名」など</span></li>
+      <li><span class="icon">🙏</span><span><strong>冒頭は「お世話になっております」</strong>から始める</span></li>
+      <li><span class="icon">✍️</span><span><strong>署名は必ず入れる</strong>大学名・学年・氏名・連絡先</span></li>
+      <li><span class="icon">👁️</span><span><strong>送信前に必ず自分で読む</strong>AIの文章をそのまま送らない</span></li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  🌱 就活の木 ｜ キャリ爺（北山 四郎）<br>
+  答えは、あなたの中にある。
+</footer>
+
+<div class="toast" id="toast">✅ コピーしました！</div>
+
+<script>
+
+// ===== 署名情報の自動保存（localStorage） =====
+const SIG_STORAGE_KEY = 'shukatsuMailGuide_signature';
+
+function loadSignature() {
+  try {
+    const saved = localStorage.getItem(SIG_STORAGE_KEY);
+    if (saved) {
+      document.getElementById('sig-first').value = saved;
+      document.getElementById('sig-reply').value = saved;
+    }
+  } catch (e) {
+    console.error('署名の読み込みに失敗しました:', e);
+  }
+}
+
+function saveSignature(value) {
+  // 「初めてのメール」「返信メール」どちらのタブで入力しても、同じ署名として同期・保存する
+  document.getElementById('sig-first').value = value;
+  document.getElementById('sig-reply').value = value;
+  try {
+    localStorage.setItem(SIG_STORAGE_KEY, value);
+    flashSaveNote();
+  } catch (e) {
+    console.error('署名の保存に失敗しました:', e);
+  }
+}
+
+function flashSaveNote() {
+  document.querySelectorAll('.sig-save-note').forEach(el => {
+    el.textContent = '💾 保存しました';
+    el.classList.add('saved');
+    clearTimeout(el._saveTimer);
+    el._saveTimer = setTimeout(() => {
+      el.textContent = '💾 入力内容は自動保存され、次回以降も表示されます';
+      el.classList.remove('saved');
+    }, 1500);
+  });
+}
+
+function clearSignature() {
+  if (!confirm('署名情報をクリアしますか？\n保存されているデータも削除されます。')) return;
+  document.getElementById('sig-first').value = '';
+  document.getElementById('sig-reply').value = '';
+  try {
+    localStorage.removeItem(SIG_STORAGE_KEY);
+  } catch (e) {
+    console.error('署名の削除に失敗しました:', e);
+  }
+  showToast('🗑️ 署名情報をクリアしました');
+}
+
+loadSignature();
+
+// ===== タブ切替 =====
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  document.getElementById('tab-' + tab + '-btn').classList.add('active');
+}
+
+// ===== 初めてのメール：シーン定義 =====
+const firstScenes = {
+  'intern-apply': {
+    hint: '💡 インターンシップへの参加を希望する旨と、具体的なプログラム名・開催時期を明記しましょう。',
+    instruction: 'インターンシップへの参加申込・問い合わせメールを作成してください。参加を希望する旨と、確認したい内容を丁寧に伝える、インターンシップ参加希望の初回メールにしてください。',
+    label: 'インターンシップ参加申込メール',
+    sample: `件名：【インターンシップ参加希望】○○大学 山田太郎
+
+○○株式会社
+採用ご担当者様
+
+はじめてご連絡いたします。
+○○大学○年の山田太郎と申します。
+
+貴社のインターンシップに大変興味を持ち、ご連絡いたしました。
+○月開催の「○○プログラム（1day）」への参加を希望しております。
+
+参加方法や選考の有無についてご教示いただけますと幸いです。
+
+何卒よろしくお願い申し上げます。`
+  },
+  'intern-doc': {
+    hint: '💡 添付ファイル名を明記し、提出物のリストと期限への言及も忘れずに。',
+    instruction: 'インターンシップ選考のための書類（ESや履歴書）を初めて送付するメールを作成してください。書類を添付した旨と内容を丁寧に伝えてください。',
+    label: 'インターンシップ書類送付メール',
+    sample: `件名：【インターンシップ選考書類提出】○○大学 山田太郎
+
+○○株式会社
+採用ご担当者様
+
+はじめてご連絡いたします。
+○○大学○年の山田太郎と申します。
+
+このたびは、インターンシップへの選考書類をお送りいたします。
+添付ファイルをご確認ください。
+
+【添付書類】
+・エントリーシート（01_ES_山田太郎.pdf）
+・履歴書（02_履歴書_山田太郎.pdf）
+
+ご不明な点がございましたら、お気軽にご連絡ください。
+何卒よろしくお願い申し上げます。`
+  },
+  'intern-question': {
+    hint: '💡 質問は1〜2点に絞り、具体的に。「参加を希望している」旨を冒頭で伝えると好印象です。',
+    instruction: 'インターンシップ説明会・情報サイトを見て生じた質問を採用担当者に問い合わせるメールを作成してください。参加意欲を伝えながら、質問内容を明確に伝えてください。',
+    label: 'インターンシップ説明会後の質問メール',
+    sample: `件名：【インターンシップについての質問】○○大学 山田太郎
+
+○○株式会社
+採用ご担当者様
+
+はじめてご連絡いたします。
+○○大学○年の山田太郎と申します。
+
+先日の会社説明会に参加させていただき、インターンシップへの参加を強く希望しております。
+その際に確認しきれなかった点がございましてご連絡いたしました。
+
+【ご質問】
+・インターンシップの服装は私服・スーツどちらでしょうか？
+・当日の持ち物に特別なものはございますか？
+
+お忙しいところ恐れ入りますが、ご回答いただけますと幸いです。
+何卒よろしくお願い申し上げます。`
+  },
+  'intern-recommend': {
+    hint: '💡 「学内推薦」でいただいた機会であることを明記し、大学キャリアセンターへの感謝の一言も添えると丁寧です。参加確定後、なるべく早めに送りましょう。',
+    instruction: '大学のキャリア支援課（キャリアセンター）からの学内推薦により、インターンシップに参加させていただくことになった旨を伝える、事前の挨拶メールを作成してください。推薦をいただいたことへの感謝と、参加への意欲を丁寧に伝える初回メールにしてください。',
+    label: '学内推薦インターンシップ参加・事前挨拶メール',
+    sample: `件名：【学内推薦によるインターンシップ参加のご挨拶】○○大学 山田太郎
+
+○○株式会社
+採用ご担当者様
+
+はじめてご連絡いたします。
+○○大学○年の山田太郎と申します。
+
+このたびは、大学のキャリア支援課より学内推薦をいただき、貴社のインターンシップに参加させていただく運びとなりました。
+このような貴重な機会を賜りましたこと、心より御礼申し上げます。
+
+参加にあたり、事前のご挨拶を申し上げたく、ご連絡いたしました。
+当日に向けて、しっかりと準備を進めてまいります。
+
+何かご不明な点等ございましたら、お気軽にお申し付けください。
+何卒よろしくお願い申し上げます。`
+  },
+  'intern-voluntary-thanks': {
+    hint: '💡 自己応募（学内推薦を通さず自分で申し込んだ）インターンシップの参加が決まったら、決定通知への返信としてお礼を伝えましょう。応募のきっかけや意欲を添えると好印象です。',
+    instruction: '学内推薦ではなく、自ら志望して応募したインターンシップへの参加が決定したことに対するお礼メールを作成してください。参加の機会をいただいたことへの感謝と、当日への意欲を丁寧に伝える内容にしてください。',
+    label: '自発的応募インターンシップ参加・お礼メール',
+    sample: `件名：【インターンシップ参加のお礼】○○大学 山田太郎
+
+○○株式会社
+採用ご担当者様
+
+このたびは、貴社のインターンシップにご選考いただき、誠にありがとうございます。
+○○大学○年の山田太郎と申します。
+
+自ら志望して応募させていただいたプログラムに参加できることとなり、大変嬉しく思っております。
+参加にあたっては、貴社の事業内容や社風への理解を深め、当日は積極的に取り組んでまいる所存です。
+
+改めまして、このたびの貴重な機会をいただき、心より御礼申し上げます。
+当日はどうぞよろしくお願い申し上げます。`
+  },
+  'entry': {
+    hint: '💡 エントリーの挨拶メールは、自己紹介と志望動機の入口を簡潔に。長くなりすぎないのがコツです。',
+    instruction: '採用担当者に初めてエントリーの挨拶をするメールを作成してください。自己紹介と志望の旨を簡潔に伝える内容にしてください。',
+    label: 'エントリー挨拶メール',
+    sample: `件名：【エントリーのご挨拶】○○大学 山田太郎
+
+○○株式会社
+採用ご担当者様
+
+はじめてご連絡いたします。
+○○大学○年の山田太郎と申します。
+
+このたびは貴社の採用情報を拝見し、ぜひ応募させていただきたくご連絡いたしました。
+貴社の○○事業に強く魅力を感じ、ぜひ詳しくお話を伺えればと存じます。
+
+今後ともよろしくお願い申し上げます。`
+  },
+  'doc-submit': {
+    hint: '💡 提出書類の種類・ファイル名を明示し、期限内に提出できたことを伝えましょう。',
+    instruction: '選考のための書類（ESや履歴書）を初めて提出するメールを作成してください。提出書類の内容と添付している旨を丁寧に伝えてください。',
+    label: '選考書類初回提出メール',
+    sample: `件名：【選考書類のご提出】○○大学 山田太郎
+
+○○株式会社
+採用ご担当者様
+
+はじめてご連絡いたします。
+○○大学○年の山田太郎と申します。
+
+このたびは選考書類を期限内にご提出いたします。
+添付ファイルをご確認ください。
+
+【添付書類】
+・エントリーシート（ES_山田太郎.pdf）
+
+ご確認の程、よろしくお願い申し上げます。`
+  },
+  'event-join': {
+    hint: '💡 参加希望の会社説明会・日程を明確に。申込フォームがある場合は不要なケースも多いです。',
+    instruction: '会社説明会またはOB・OG訪問への参加申込メールを作成してください。参加希望の日程と参加を希望する理由を簡潔に伝える内容にしてください。',
+    label: '説明会・OB訪問申込メール',
+    sample: `件名：【会社説明会参加希望】○○大学 山田太郎
+
+○○株式会社
+採用ご担当者様
+
+はじめてご連絡いたします。
+○○大学○年の山田太郎と申します。
+
+貴社の会社説明会への参加を希望し、ご連絡いたしました。
+
+【希望日程】
+○月○日（○）○時〜 の回
+
+ご参加方法についてご案内いただけますと幸いです。
+何卒よろしくお願い申し上げます。`
+  },
+  'info-request': {
+    hint: '💡 「どこで情報を知ったか」を一言添えると丁寧な印象になります。質問は1〜2点に絞りましょう。',
+    instruction: '採用情報について問い合わせる初回メールを作成してください。何を知りたいかを明確にし、丁寧に問い合わせる内容にしてください。',
+    label: '採用情報問い合わせメール',
+    sample: `件名：【採用情報についてのお問い合わせ】○○大学 山田太郎
+
+○○株式会社
+採用ご担当者様
+
+はじめてご連絡いたします。
+○○大学○年の山田太郎と申します。
+
+貴社の採用情報をウェブサイトで拝見し、ご連絡いたしました。
+
+【ご確認したい点】
+・○○年度の採用スケジュールについて教えていただけますか？
+・エントリーの受付方法を教えていただけますか？
+
+お忙しいところ恐れ入りますが、よろしくお願い申し上げます。`
+  },
+  'obog-request': {
+    hint: '💡 OB・OG訪問のお願いは、誰から紹介してもらったか（キャリアセンター経由など）も添えると相手に安心感を与えます。',
+    instruction: 'OBまたはOGへの訪問をお願いする初回メールを作成してください。自己紹介と訪問をお願いする旨を丁寧に伝える内容にしてください。',
+    label: 'OB・OG訪問依頼メール',
+    sample: `件名：【OB訪問のお願い】○○大学 山田太郎
+
+○○株式会社
+○○部門 山田花子様
+
+はじめてご連絡いたします。
+○○大学○年の山田太郎と申します。
+大学のキャリアセンターよりご紹介いただき、ご連絡いたしました。
+
+貴社のお仕事や社風について、ぜひ直接お話を伺えればと思い、OB訪問のお願いでご連絡申し上げました。
+
+・希望日時：○月中旬頃、平日の午後が比較的ご都合が合いやすいですが、山田様のご都合に合わせます。
+・所要時間：30分〜1時間程度
+
+ご多忙の中、誠に恐れ入りますが、ご検討いただけますと幸いです。
+何卒よろしくお願い申し上げます。`
+  },
+  'obog-thanks': {
+    hint: '💡 OB・OG訪問後のお礼は当日中か翌朝までに。話の中で印象に残った言葉を具体的に盛り込むと誠実さが伝わります。',
+    instruction: 'OBまたはOG訪問後のお礼メールを作成してください。訪問への感謝と、お話の中で感じたことや学びを具体的に交えた誠実な内容にしてください。',
+    label: 'OB・OG訪問お礼メール',
+    sample: `件名：【OB訪問のお礼】○○大学 山田太郎
+
+○○株式会社
+○○部門 山田花子様
+
+本日はお忙しい中、貴重なお時間をいただきありがとうございました。
+○○大学○年の山田太郎です。
+
+山田様のお話を伺い、貴社の「○○」という姿勢にとても感銘を受けました。
+自分のキャリアについても、より具体的にイメージすることができました。
+
+今後の就職活動に、本日のお話をしっかり活かしてまいります。
+改めて、誠にありがとうございました。`
+  },
+  'first-other': {
+    hint: '💡 伝えたいことを下の欄に自由に箇条書きしてください。AIが適切なメールに仕上げます。',
+    instruction: '採用担当者への初回メールを作成してください。',
+    label: '初回メール',
+    sample: ''
+  }
+};
+
+// ===== 返信メール：シーン定義（既存） =====
+const replyScenes = {
+  receipt: {
+    hint: "💡 受検案内が届いたら、まず「了解しました」の返信を。日程・方法を確認したことを伝えましょう。",
+    instruction: "受検案内（AI面接・筆記試験など）への返信メールを作成してください。受検することへの了解と、確認した旨を丁寧に伝える内容にしてください。"
+  },
+  schedule: {
+    hint: "💡 候補日を複数提示されている場合は、希望日を明確に。調整が必要な場合は代替案も添えましょう。",
+    instruction: "面接日程の確認・調整に関する返信メールを作成してください。希望日程や調整内容を丁寧に伝える内容にしてください。"
+  },
+  accept: {
+    hint: "💡 内定承諾は、感謝の気持ちと入社への意欲を伝える大切なメールです。",
+    instruction: "内定承諾の返信メールを作成してください。感謝の気持ちと入社への意欲を丁寧に伝える内容にしてください。"
+  },
+  decline: {
+    hint: "💡 辞退の連絡は早めに。感謝の言葉を忘れずに、簡潔に伝えましょう。",
+    instruction: "選考辞退の連絡メールを作成してください。感謝の気持ちを伝えながら、丁寧かつ簡潔に辞退の意思を伝える内容にしてください。"
+  },
+  inquiry: {
+    hint: "💡 質問は具体的に。何を知りたいかを明確にしましょう。",
+    instruction: "採用担当者への問い合わせ・質問メールを作成してください。質問内容を明確に、丁寧に伝える内容にしてください。"
+  },
+  thanks: {
+    hint: "💡 面接後は当日中か翌朝までにお礼メールを送りましょう。面接での学びや感謝を具体的に。",
+    instruction: "面接後のお礼メールを作成してください。面接への感謝と、面接で感じたことや学びを交えた、誠実な内容にしてください。"
+  },
+  document: {
+    hint: "💡 書類を添付した旨と、書類の内容（ES・履歴書など）を明記しましょう。",
+    instruction: "書類提出の連絡メールを作成してください。提出書類の内容と、添付している旨を丁寧に伝える内容にしてください。"
+  },
+  other: {
+    hint: "💡 伝えたいことを下の欄に自由に箇条書きしてください。AIが適切なメールに仕上げます。",
+    instruction: "採用担当者への返信メールを作成してください。"
+  }
+};
+
+const replyLabels = {
+  receipt: '返信メール（受検案内）',
+  schedule: '返信メール（日程調整）',
+  accept: '内定承諾メール',
+  decline: '選考辞退メール',
+  inquiry: '問い合わせメール',
+  thanks: 'お礼メール',
+  document: '書類提出メール',
+  other: '返信メール'
+};
+
+// ===== 初回メールシーン変更 =====
+function onFirstSceneChange() {
+  const scene = document.getElementById('scene-first').value;
+  const hintEl = document.getElementById('hint-first');
+  const sampleCard = document.getElementById('card-sample-first');
+  const sampleEl = document.getElementById('sample-text-first');
+
+  if (scene && firstScenes[scene]) {
+    hintEl.textContent = firstScenes[scene].hint;
+    hintEl.style.display = 'block';
+    if (firstScenes[scene].sample) {
+      sampleEl.textContent = firstScenes[scene].sample;
+      sampleCard.style.display = 'block';
+    } else {
+      sampleCard.style.display = 'none';
+    }
+  } else {
+    hintEl.style.display = 'none';
+    sampleCard.style.display = 'none';
+  }
+}
+
+// ===== 返信メールシーン変更 =====
+function onReplySceneChange() {
+  const scene = document.getElementById('scene-reply').value;
+  const hintEl = document.getElementById('hint-reply');
+  if (scene && replyScenes[scene]) {
+    hintEl.textContent = replyScenes[scene].hint;
+    hintEl.style.display = 'block';
+  } else {
+    hintEl.style.display = 'none';
+  }
+}
+
+// ===== プロンプト生成 =====
+function generatePrompt(type) {
+  if (type === 'first') {
+    const scene = document.getElementById('scene-first').value;
+    const toInfo = document.getElementById('to-info-first').value.trim();
+    const points = document.getElementById('points-first').value.trim();
+    const sig = document.getElementById('sig-first').value.trim();
+
+    if (!scene) { showToast('⚠️ シーンを選んでください'); return; }
+    if (!points) { showToast('⚠️ 伝えたいことを入力してください'); return; }
+
+    const sc = firstScenes[scene];
+    let prompt = `以下の条件で、採用担当者への${sc.label}を作成してください。\n`;
+    prompt += `【依頼内容】${sc.instruction}\n\n`;
+    if (toInfo) prompt += `【送付先情報】\n${toInfo}\n\n`;
+    prompt += `【私が伝えたいこと】\n${points}\n\n`;
+    if (sig) {
+      prompt += `【署名情報】\n${sig}\n\n`;
+    } else {
+      prompt += `【署名情報】\n○○大学○年　氏名\nメール：xxxx@xxxx.ac.jp\n電話：090-XXXX-XXXX\n\n`;
+    }
+    prompt += `【作成条件】\n`;
+    prompt += `・丁寧なビジネスメールの形式で\n`;
+    prompt += `・件名・宛名・本文・署名の構成で\n`;
+    prompt += `・初めてご連絡する相手に失礼のない表現で\n`;
+    prompt += `・簡潔に、長くなりすぎないように\n`;
+    prompt += `・送信前に自分で確認することを前提に、自然な日本語で`;
+
+    document.getElementById('prompt-box-first').textContent = prompt;
+    document.getElementById('prompt-area-first').classList.add('show');
+    document.getElementById('copy-btn-first').textContent = '📋 プロンプトをコピーする';
+    document.getElementById('copy-btn-first').classList.remove('copied');
+
+  } else {
+    const scene = document.getElementById('scene-reply').value;
+    const received = document.getElementById('received-mail').value.trim();
+    const points = document.getElementById('points-reply').value.trim();
+    const sig = document.getElementById('sig-reply').value.trim();
+
+    if (!scene) { showToast('⚠️ シーンを選んでください'); return; }
+    if (!points) { showToast('⚠️ 伝えたいことを入力してください'); return; }
+
+    const instruction = replyScenes[scene].instruction;
+    const label = replyLabels[scene];
+
+    let prompt = `以下の条件で、採用担当者への${label}を作成してください。\n`;
+    prompt += `【依頼内容】${instruction}\n\n`;
+    if (received) prompt += `【先方からのメール】\n${received}\n\n`;
+    prompt += `【私が伝えたいこと】\n${points}\n\n`;
+    if (sig) {
+      prompt += `【署名情報】\n${sig}\n\n`;
+    } else {
+      prompt += `【署名情報】\n○○大学○年　氏名\nメール：xxxx@xxxx.ac.jp\n電話：090-XXXX-XXXX\n\n`;
+    }
+    prompt += `【作成条件】\n`;
+    prompt += `・丁寧なビジネスメールの形式で\n`;
+    prompt += `・件名・宛名・本文・署名の構成で\n`;
+    prompt += `・簡潔に、長くなりすぎないように\n`;
+    prompt += `・送信前に自分で確認することを前提に、自然な日本語で`;
+
+    document.getElementById('prompt-box-reply').textContent = prompt;
+    document.getElementById('prompt-area-reply').classList.add('show');
+    document.getElementById('copy-btn-reply').textContent = '📋 プロンプトをコピーする';
+    document.getElementById('copy-btn-reply').classList.remove('copied');
+  }
+
+  setTimeout(() => {
+    const area = document.getElementById('prompt-area-' + type);
+    area.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+// ===== コピー =====
+function copyPrompt(type) {
+  const text = document.getElementById('prompt-box-' + type).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn-' + type);
+    btn.textContent = '✅ コピーしました！';
+    btn.classList.add('copied');
+    showToast('✅ コピーしました！AIツールに貼り付けてください');
+    setTimeout(() => {
+      btn.textContent = '📋 プロンプトをコピーする';
+      btn.classList.remove('copied');
+    }, 3000);
+  });
+}
+
+// ===== トースト =====
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ===== PWAインストール処理 =====
+let deferredPrompt = null;
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches
+  || window.navigator.standalone;
+
+if (isIOS && !isInStandaloneMode) {
+  document.getElementById('ios-banner').classList.add('show');
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('install-banner').classList.add('show');
+  document.getElementById('btn-install-header').classList.add('show');
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((result) => {
+      if (result.outcome === 'accepted') {
+        showToast('✅ ホーム画面に追加しました！');
+        document.getElementById('install-banner').classList.remove('show');
+        document.getElementById('btn-install-header').classList.remove('show');
+      }
+      deferredPrompt = null;
+    });
+  } else if (isIOS) {
+    document.getElementById('ios-banner').classList.add('show');
+    document.getElementById('ios-banner').scrollIntoView({ behavior: 'smooth' });
+  } else {
+    showToast('💡 ブラウザのメニューから「ホーム画面に追加」をお選びください');
+  }
+}
+
+function closeIosBanner() {
+  document.getElementById('ios-banner').classList.remove('show');
+}
+
+document.getElementById('btn-install-banner')?.addEventListener('click', installApp);
+document.getElementById('btn-dismiss-banner')?.addEventListener('click', () => {
+  document.getElementById('install-banner').classList.remove('show');
+});
+
+window.addEventListener('appinstalled', () => {
+  showToast('🌱 アプリをインストールしました！');
+  document.getElementById('install-banner').classList.remove('show');
+  document.getElementById('btn-install-header').classList.remove('show');
+});
+
+
+// ===== QRコード生成（qrcode.js CDN使用） =====
+const SITE_URL = 'https://tanukin0423.github.io/shukatsu-mail-guide/';
+
+function loadQRLib(callback) {
+  if (window.QRCode) { callback(); return; }
+  const s = document.createElement('script');
+  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+  s.onload = callback;
+  document.head.appendChild(s);
+}
+
+// canvasにQRを描画するユーティリティ
+function drawQRToCanvas(canvasId, size) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, size, size);
+
+  // QRコードデータ取得（ダミーdivを使って生成）
+  const tmp = document.createElement('div');
+  tmp.style.display = 'none';
+  document.body.appendChild(tmp);
+  const qr = new QRCode(tmp, {
+    text: SITE_URL,
+    width: size,
+    height: size,
+    colorDark: '#2d6b4a',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+  // QRCodejsがcanvasを内部生成するのでそれをコピー
+  setTimeout(() => {
+    const srcCanvas = tmp.querySelector('canvas');
+    if (srcCanvas) {
+      canvas.width = size;
+      canvas.height = size;
+      canvas.getContext('2d').drawImage(srcCanvas, 0, 0, size, size);
+    }
+    document.body.removeChild(tmp);
+  }, 100);
+}
+
+function openQrModal() {
+  document.getElementById('qr-modal-overlay').classList.add('show');
+  loadQRLib(() => {
+    drawQRToCanvas('qr-canvas-modal', 200);
+  });
+}
+
+function closeQrModal(e) {
+  if (e.target === document.getElementById('qr-modal-overlay')) {
+    document.getElementById('qr-modal-overlay').classList.remove('show');
+  }
+}
+
+function printQr() {
+  document.getElementById('qr-modal-overlay').classList.remove('show');
+  loadQRLib(() => {
+    drawQRToCanvas('qr-canvas-print', 160);
+    setTimeout(() => { window.print(); }, 300);
+  });
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.error('SW error:', err));
+  });
+}
+</script>
+
+</body>
+</html>
